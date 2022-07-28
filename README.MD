@@ -1,6 +1,6 @@
 # Setup Básico de Postres con Visual Studio Code
 
-En este repositorio se encuentran varios archivos que nos ayudarán a configurar VS Code para trabajar con Postres.
+En este repositorio se encuentran varios archivos que nos ayudarán a configurar VS Code para trabajar con Postgres.
 
 ## Software
 Para crear un servicio de base de datos con Postgres tenemos distintas opciones. Podemos instalar Postgres con el [instalador oficial](https://www.postgresql.org/download/) o utilizar un stack de desarrollo como el paquete [WAPP](https://bitnami.com/stack/wapp) de Bitnami.
