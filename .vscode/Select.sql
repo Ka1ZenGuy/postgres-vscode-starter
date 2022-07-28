@@ -1,1 +1,1 @@
- SELECT * FROM lista_dulces;
+ SELECT * FROM lista_productos;
