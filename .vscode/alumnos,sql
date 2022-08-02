@@ -1,0 +1,41 @@
+-- @block Borrar tabla
+DROP TABLE IF EXISTS alumnos;
+-- @block Crear tabla 
+CREATE TABLE alumnos(
+id SERIAL                    Not null primary key,
+nombre VARCHAR(15)                 Not NULL,
+matematicas INTEGER               not NULL, CHECK (matematicas >= 0), CHECK (matematicas <=10),
+lengua INTEGER                  Not Null, CHECK (lengua >=0), CHECK (lengua <=10),
+fisica INTEGER                  Not NULL, CHECK (fisica >=0), CHECK(fisica <=10)
+);
+-- @block   Insertar Datos 
+Insert INTO
+alumnos(nombre,matematicas,lengua,fisica)
+VALUES
+('Alicia',7,2,5),
+('Bernardo', 8, 9, 6),
+('Carmen', 8, 3, 6),
+('Dario', 5, 5, 9),
+('Esther', 3, 7, 6),
+('Fernando', 4, 8, 10),
+('Gloria', 1, 4, 6);
+
+-- @block Recuperar matemáticas para Gloria
+Select * from alumnos Where nombre = 'Gloria'; 
+INSERT INTO alumnos VALUES ('Gloria', 8, 4, 6);
+
+--@block Recuperar mates con update
+UPDATE
+alumnos
+SET
+matematicas = 8
+where
+nombre = 'Gloria';
+
+-- @block Borrar a los que suspendieron mates
+Select * From alumnos
+where matematicas < 5;
+-- @block Poner un 10 en fisica a los que tengan aprobadas las mates
+UPDATE alumnos 
+SET fisica = 10
+where matematicas >= 5;
