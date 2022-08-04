@@ -40,12 +40,11 @@
     15.- Queremos saber el porcentaje de carnívoros en cada hábitat.
 */
 
---@block Borrar todas las tablas de la base de datos si ya existen.
-
---@block Crear las tablas necesarias para la base de datos
-
---@block Crear las vistas necesarias para simplificar búsquedas futuras.
-
---@block Hacer la entrada inicial de información
-
---@block Crear tantos bloques como hagan falta para realizar las acciones solicitadas
+--@block Queremos poder obtener de forma sencilla cuantas veces ha sido visitado cada animal
+SELECT
+animales.id_animal, animales.nombre, count(*)
+FROM
+visitas_habitats
+INNER JOIN animales
+ON visitas_habitats.id_habitat = animales.id_habitat
+group by animales.id_animal;
