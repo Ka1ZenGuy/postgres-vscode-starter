@@ -42,9 +42,19 @@
 
 --@block Queremos poder obtener de forma sencilla cuantas veces ha sido visitado cada animal
 SELECT
-animales.id_animal, animales.nombre, count(*)
+animales.id_animal, animales.nombre, count(*) AS "Numero de visitas"
 FROM
 visitas_habitats
 INNER JOIN animales
 ON visitas_habitats.id_habitat = animales.id_habitat
-group by animales.id_animal;
+group by animales.id_animal
+order by "Numero de visitas" DESC
+LIMIT 10;
+
+-- @block Queremos poder comprobar si un visitante ha visitado a un animal concreto.
+    SELECT
+    visitantes.id_nombre, animales.id_habitat, count(*) AS "Visitas de Visitante"
+    FROM
+    visitantes
+
+

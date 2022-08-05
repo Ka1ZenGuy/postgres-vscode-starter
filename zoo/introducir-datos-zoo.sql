@@ -1,5 +1,3 @@
--- @block
-
 -- Tabla "especies"
 insert into especies (nombre, peso_maximo, esperanza_de_vida, peligrosidad, dieta) values ('Dicrostonyx groenlandicus', 77921.32, 174, 'Alta', 'herbívoro');
 insert into especies (nombre, peso_maximo, esperanza_de_vida, peligrosidad, dieta) values ('Phoenicopterus ruber', 145515.2, 135, 'Media', 'omnívoro');

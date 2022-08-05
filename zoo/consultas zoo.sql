@@ -41,12 +41,90 @@
 */
 
 --@block Borrar todas las tablas de la base de datos si ya existen.
-
+DROP TABLE IF EXISTS prestamos;
+DROP TABLE IF EXISTS clientes;
+DROP TABLE IF EXISTS cintas;
 --@block Crear las tablas necesarias para la base de datos
+CREATE TABLE clientes(
+    numero_de_socio SERIAL PRIMARY KEY NOT NULL,
+    nombre VARCHAR(60) NOT NULL,
+    fecha_de_inscripcion DATE NOT NULL,
+    fecha_ultima_mensualidad DATE NOT NULL
+);
+CREATE TABLE cintas(
+    id_cinta SERIAL PRIMARY KEY NOT NULL,
+    titulo VARCHAR(100) NOT NULL,
+    año_de_lanzamiento DATE,
+    sinopsis TEXT,
+    precio NUMERIC(5,2) NOT NULL
+);
+CREATE TABLE prestamos(
+    id_alquiler SERIAL PRIMARY KEY NOT NULL,
+    fecha_prestamo DATE NOT NULL,
+    fecha_limite_devolucion DATE NOT NULL,
+    pelicula_prestada INTEGER NOT NULL,
+    socio INTEGER NOT NULL,
+    CONSTRAINT cinta_id_cinta_fk
+        FOREIGN KEY (pelicula_prestada)
+        REFERENCES cintas(id_cinta),
+    CONSTRAINT clientes_numero_de_socio_fk
+        FOREIGN KEY (socio)
+        REFERENCES clientes(numero_de_socio)
+);
 
---@block Crear las vistas necesarias para simplificar búsquedas futuras.
 
---@block Hacer la entrada inicial de información
+-- @block Obtener el precio de cada prestamo
+SELECT
+    sum(cintas.precio)
+FROM
+    prestamos INNER JOIN cintas
+ON
+    prestamos.pelicula_prestada = cintas.id_cinta;
 
---@block Crear tantos bloques como hagan falta para realizar las acciones solicitadas
+-- @block dado el numero de socio, obtener el nombre
+SELECT
+    nombre
+FROM
+    clientes
+WHERE
+    numero_de_socio = 6;
 
+-- @block Nombres de las películas alquiladas por el usuario 6
+SELECT
+    cintas.titulo
+FROM
+    prestamos INNER JOIN cintas
+ON
+    prestamos.pelicula_prestada = cintas.id_cinta
+WHERE
+    prestamos.socio = 6;
+
+-- @block Mostrar una lista de peliculas y las veces que se ha alquilado
+SELECT
+    cintas.id_cinta, cintas.titulo, count(*) AS "Veces Alquilada"
+FROM
+    prestamos INNER JOIN cintas
+ON
+    prestamos.pelicula_prestada = cintas.id_cinta
+GROUP BY
+    cintas.id_cinta
+ORDER BY "Veces Alquilada" DESC;
+
+-- @block crear vista veces_alquilada
+CREATE OR REPLACE VIEW veces_alquilada AS
+SELECT
+    cintas.id_cinta, cintas.titulo, count(*) AS "Veces Alquilada"
+FROM
+    prestamos INNER JOIN cintas
+ON
+    prestamos.pelicula_prestada = cintas.id_cinta
+GROUP BY
+    cintas.id_cinta
+ORDER BY "Veces Alquilada" DESC;
+
+-- @block Consultar vista, filtrando los resultados
+SELECT * FROM veces_alquilada
+WHERE "Veces Alquilada" > 15;
+
+--@block
+DROP VIEW veces_alquilada;
